@@ -23,8 +23,9 @@ public:
 	int getM();
 	int getN();
 	std::vector<std::vector<char>> getGrid();
-	void readGrid(std::istream& input_stream);
+	void readGrid(std::istream& input_stream = std::cin);
 	void writeGrid(std::ostream& out);
 	bool isNodeOpen(char examinedNodeValue, std::bitset<4> dir);
-	void dijkstra(std::ostream& out);
+	bool isHexDigit(char c);
+	void dijkstra(std::ostream& out = std::cout);
 };
