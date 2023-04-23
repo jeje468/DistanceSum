@@ -73,7 +73,7 @@ namespace Unittest1
 				std::stringstream buffer;
 				std::streambuf* prevcoutbuf = std::cout.rdbuf(buffer.rdbuf());
 				
-				problem.dijkstra(std::cout);
+				problem.dijkstra();
 
 				std::string d = buffer.str();
 				Assert::IsTrue(d == testInputs[i].result);
