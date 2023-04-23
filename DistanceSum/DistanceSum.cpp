@@ -89,7 +89,7 @@ bool DistanceSum::isNodeOpen(char examinedNodeValue, std::bitset<4> dir)
 
 bool DistanceSum::isHexDigit(char c)
 {
-	return (c >= '0' && c <= '9') || (c >= 'A' && c <= 'F');
+	return (c > '0' && c <= '9') || (c >= 'A' && c <= 'F');
 }
 
 void DistanceSum::dijkstra(std::ostream& out)
@@ -109,8 +109,6 @@ void DistanceSum::dijkstra(std::ostream& out)
 		}
 	}
 
-	nodes[startingNode.row][startingNode.col].dist = 0;
-
 	while (!pq.empty())
 	{
 		Node curr = pq.top();
@@ -119,7 +117,7 @@ void DistanceSum::dijkstra(std::ostream& out)
 		for (size_t i = 0; i < directionCoordinates.size(); i++) 
 		{
 			int r = curr.row + directionCoordinates[i].first, c = curr.col + directionCoordinates[i].second;
-			if (r < 0 || r >= M || c < 0 || c >= N || grid[r][c] == 'X' || grid[r][c] == '0') continue;
+			if (r < 0 || r >= M || c < 0 || c >= N || grid[r][c] == 'X') continue;
 			if (grid[r][c] == '-' || (isHexDigit(grid[r][c]) && isNodeOpen(grid[r][c], directionMasks[i])))
 			{
 				if (curr.dist + 1 < nodes[r][c].dist) {
@@ -135,15 +133,8 @@ void DistanceSum::dijkstra(std::ostream& out)
 	int sum = 0;
 	for (int i = 0; i < M; i++) {
 		for (int j = 0; j < N; j++) {
-			if (grid[i][j] != 'T' && grid[i][j] != 'X' && grid[i][j] != '-') {
-				if (nodes[i][j].dist == std::numeric_limits<int>::max() - 1)
-				{
-					sum += 0;
-				}
-				else
-				{
-					sum += nodes[i][j].dist - 1;
-				}
+			if (isHexDigit(grid[i][j])) {nodes[i][j].dist - 1;
+				sum += nodes[i][j].dist == std::numeric_limits<int>::max() - 1 ? 0 : nodes[i][j].dist - 1;
 			}
 		}
 	}
